@@ -97,8 +97,14 @@ Category ids in annotations are not in [1, #categories]! We'll apply a mapping f
         id_map = {v: i for i, v in enumerate(cat_ids)}
         meta.thing_dataset_id_to_contiguous_id = id_map
 
-    # sort indices for reproducible results
-    img_ids = sorted(coco_api.imgs.keys())
+    if dataset_name == 'coco_2017_train':
+        # load a pre-defined set of 50% random images
+        img_ids = np.load('coco_2017_train_50pct_ids_p1.npy').tolist()
+        # sorting just because it was done originally (see line below), not sure if that's necessary
+        img_ids = sorted(img_ids)
+    else:
+        # sort indices for reproducible results
+        img_ids = sorted(coco_api.imgs.keys())
     # imgs is a list of dicts, each looks something like:
     # {'license': 4,
     #  'url': 'http://farm6.staticflickr.com/5454/9413846304_881d5e5c3b_z.jpg',
@@ -329,9 +335,9 @@ def convert_to_coco_dict(dataset_name):
     # unmap the category mapping ids for COCO
     if hasattr(metadata, "thing_dataset_id_to_contiguous_id"):
         reverse_id_mapping = {v: k for k, v in metadata.thing_dataset_id_to_contiguous_id.items()}
-        reverse_id_mapper = lambda contiguous_id: reverse_id_mapping[contiguous_id]  # noqa
+        def reverse_id_mapper(contiguous_id): return reverse_id_mapping[contiguous_id]  # noqa
     else:
-        reverse_id_mapper = lambda contiguous_id: contiguous_id  # noqa
+        def reverse_id_mapper(contiguous_id): return contiguous_id  # noqa
 
     categories = [
         {"id": reverse_id_mapper(id), "name": name}
