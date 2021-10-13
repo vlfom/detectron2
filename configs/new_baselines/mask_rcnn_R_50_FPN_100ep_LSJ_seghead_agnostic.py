@@ -55,13 +55,13 @@ dataloader.train.mapper.recompute_boxes = True
 dataloader.train.total_batch_size = 48
 
 # Equivalent to 200 epochs.
-# 200 ep = 208688 iters * 48 images/iter / 50085 images/ep
-train.max_iter = 208688
+# 100 ep = 104344 iters * 48 images/iter / 50085 images/ep
+train.max_iter = 104344
 
 lr_multiplier = L(WarmupParamScheduler)(
     scheduler=L(MultiStepParamScheduler)(
         values=[1.0, 0.1, 0.01],
-        milestones=[163889, 177546],
+        milestones=[92750, 100479],
         num_updates=train.max_iter,
     ),
     warmup_length=500 / train.max_iter,
