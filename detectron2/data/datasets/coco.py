@@ -97,7 +97,7 @@ Category ids in annotations are not in [1, #categories]! We'll apply a mapping f
         id_map = {v: i for i, v in enumerate(cat_ids)}
         meta.thing_dataset_id_to_contiguous_id = id_map
 
-    if dataset_name == 'coco_2017_train':
+    if "coco" in dataset_name and "train" in dataset_name:
         # load a pre-defined set of 50% random images
         img_ids = np.load('coco_2017_train_50pct_ids_p1.npy').tolist()
         # sorting just because it was done originally (see line below), not sure if that's necessary
