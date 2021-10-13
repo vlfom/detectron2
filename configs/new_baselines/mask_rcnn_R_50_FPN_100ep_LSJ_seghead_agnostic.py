@@ -52,11 +52,11 @@ dataloader.train.mapper.augmentations = [
 dataloader.train.mapper.recompute_boxes = True
 
 # larger batch-size.
-dataloader.train.total_batch_size = 64
+dataloader.train.total_batch_size = 48
 
-# Equivalent to 100 epochs.
-# 100 ep = 184375 iters * 64 images/iter / 118000 images/ep
-train.max_iter = 184375
+# Equivalent to 200 epochs.
+# 200 ep = 208688 iters * 48 images/iter / 50085 images/ep
+train.max_iter = 208688
 
 lr_multiplier = L(WarmupParamScheduler)(
     scheduler=L(MultiStepParamScheduler)(
