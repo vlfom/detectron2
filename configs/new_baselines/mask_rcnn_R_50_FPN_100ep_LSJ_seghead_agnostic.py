@@ -10,7 +10,7 @@ from ..common.optim import SGD as optimizer
 from ..common.train import train
 
 # train from scratch
-train.init_checkpoint = ""
+train.init_checkpoint = "/usr/stud/fomenko/moco/detection/moco_v2_800ep_pretrain.pkl"
 train.amp.enabled = True
 train.ddp.fp16_compression = True
 model.backbone.bottom_up.freeze_at = 0
@@ -52,16 +52,16 @@ dataloader.train.mapper.augmentations = [
 dataloader.train.mapper.recompute_boxes = True
 
 # larger batch-size.
-dataloader.train.total_batch_size = 48
+dataloader.train.total_batch_size = 64
 
-# Equivalent to 200 epochs.
-# 100 ep = 104344 iters * 48 images/iter / 50085 images/ep
-train.max_iter = 104344
+# Equivalent to 100 epochs.
+# 100 ep = 78258 iters * 64 images/iter / 50085 images/ep
+train.max_iter = 78258
 
 lr_multiplier = L(WarmupParamScheduler)(
     scheduler=L(MultiStepParamScheduler)(
         values=[1.0, 0.1, 0.01],
-        milestones=[92750, 100479],
+        milestones=[69563, 75359],
         num_updates=train.max_iter,
     ),
     warmup_length=500 / train.max_iter,

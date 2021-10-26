@@ -1,9 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=coco_50pct_100e
 #SBATCH --nodes=1
-#SBATCH --cpus-per-gpu=4
-#SBATCH --gres=gpu:4,VRAM:40G
-#SBATCH --mem=80GB
+#SBATCH --gpus=rtx_a6000:4
+#SBATCH --mem=100GB
 #SBATCH --time=48:00:00
 #SBATCH --output=/storage/slurm/fomenko/slurm_runs/slurm-%j.out
 #SBATCH --error=/storage/slurm/fomenko/slurm_runs/slurm-%j.out
